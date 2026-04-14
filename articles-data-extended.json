@@ -1,0 +1,152 @@
+{
+  "categories": [
+    {
+      "id": "basic",
+      "name": "基本操作",
+      "description": "CapCutの基本的な使い方から初めてのプロジェクト作成まで、初心者向けのコンテンツです。",
+      "icon": "Zap",
+      "color": "from-blue-500 to-cyan-500"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube実践",
+      "description": "YouTubeの動画制作に特化したテクニックと、視聴者を惹きつけるエフェクト活用法。",
+      "icon": "Play",
+      "color": "from-red-500 to-pink-500"
+    },
+    {
+      "id": "troubleshoot",
+      "name": "トラブル解決",
+      "description": "CapCut使用時によくある問題と、その解決方法をまとめています。",
+      "icon": "AlertCircle",
+      "color": "from-yellow-500 to-orange-500"
+    },
+    {
+      "id": "advanced",
+      "name": "高度な応用",
+      "description": "プロレベルの動画編集テクニックと、高度なエフェクト・カラーグレーディング。",
+      "icon": "Sparkles",
+      "color": "from-purple-500 to-pink-500"
+    }
+  ],
+  "articles": [
+    {"id": "basic-001", "categoryId": "basic", "title": "CapCutの基本操作：プロジェクト作成から保存まで", "description": "CapCutを初めて使う方向けに、アプリの起動からプロジェクト作成、動画の保存までの基本的な流れを解説します。", "slug": "basic-project-creation", "content": "## CapCutの基本操作ガイド\n\nCapCutはシンプルで直感的な動画編集アプリです。", "difficulty": "初級", "readingTime": 5, "views": 1250, "createdAt": "2024-01-15"},
+    {"id": "basic-002", "categoryId": "basic", "title": "タイムラインの使い方：複数クリップの管理", "description": "CapCutのタイムラインで複数の動画クリップを効率的に管理する方法を学びます。", "slug": "timeline-management", "content": "## タイムラインの使い方\n\nタイムラインはCapCutの中心です。", "difficulty": "初級", "readingTime": 4, "views": 890, "createdAt": "2024-01-16"},
+    {"id": "basic-003", "categoryId": "basic", "title": "テキストの追加と編集：字幕やタイトルの作成", "description": "CapCutでテキストを追加し、字幕やタイトルを作成する方法を詳しく解説します。", "slug": "text-editing-basics", "content": "## テキストの追加と編集\n\nCapCutでテキストを追加することで、動画にタイトルや字幕を付けることができます。", "difficulty": "初級", "readingTime": 5, "views": 1100, "createdAt": "2024-01-17"},
+    {"id": "basic-004", "categoryId": "basic", "title": "トランジションの活用：シーン切り替えを自然に", "description": "CapCutのトランジション機能を使って、シーン切り替えを自然で見栄え良くする方法。", "slug": "transitions-guide", "content": "## トランジションの活用\n\nトランジションは、2つのクリップの間に効果を加えて、シーン切り替えを自然にします。", "difficulty": "初級", "readingTime": 4, "views": 950, "createdAt": "2024-01-18"},
+    {"id": "basic-005", "categoryId": "basic", "title": "音声の編集：BGMと効果音の追加", "description": "CapCutで音声を編集し、BGMや効果音を追加する方法を学びます。", "slug": "audio-editing-basics", "content": "## 音声の編集\n\nCapCutでは、BGMや効果音を簡単に追加できます。", "difficulty": "初級", "readingTime": 4, "views": 820, "createdAt": "2024-01-19"},
+    {"id": "basic-006", "categoryId": "basic", "title": "フィルターとエフェクト：基本的な使い方", "description": "CapCutのフィルターとエフェクト機能を使って、動画を美しく加工する方法。", "slug": "filters-effects-basics", "content": "## フィルターとエフェクト\n\nCapCutには、動画を美しく加工するための豊富なフィルターとエフェクトが用意されています。", "difficulty": "初級", "readingTime": 4, "views": 1050, "createdAt": "2024-01-20"},
+    {"id": "basic-007", "categoryId": "basic", "title": "動画の速度調整：スローモーションと高速再生", "description": "CapCutで動画の再生速度を変更し、スローモーションや高速再生を実現する方法。", "slug": "speed-adjustment", "content": "## 動画の速度調整\n\nCapCutでは、動画の再生速度を自由に変更できます。", "difficulty": "初級", "readingTime": 3, "views": 750, "createdAt": "2024-01-21"},
+    {"id": "basic-008", "categoryId": "basic", "title": "クロップとズーム：フレーミングの調整", "description": "CapCutでクロップとズーム機能を使って、動画のフレーミングを調整する方法。", "slug": "crop-zoom-guide", "content": "## クロップとズーム\n\nクロップとズーム機能を使うことで、動画のフレーミングを自由に調整できます。", "difficulty": "初級", "readingTime": 3, "views": 680, "createdAt": "2024-01-22"},
+    {"id": "basic-009", "categoryId": "basic", "title": "動画の回転と反転：向きの調整", "description": "CapCutで動画を回転・反転させて、向きを調整する方法を学びます。", "slug": "rotation-flip-guide", "content": "## 動画の回転と反転\n\n動画の向きを調整することで、より良い構図を実現できます。", "difficulty": "初級", "readingTime": 3, "views": 620, "createdAt": "2024-01-23"},
+    {"id": "basic-010", "categoryId": "basic", "title": "キーフレームアニメーション：動的な効果の作成", "description": "CapCutのキーフレーム機能を使って、動的なアニメーション効果を作成する方法。", "slug": "keyframe-animation", "content": "## キーフレームアニメーション\n\nキーフレーム機能を使うことで、複雑で動的なアニメーション効果を作成できます。", "difficulty": "中級", "readingTime": 5, "views": 540, "createdAt": "2024-01-24"},
+    {"id": "basic-011", "categoryId": "basic", "title": "レイヤーの使い方：複雑な合成編集", "description": "CapCutのレイヤー機能を使って、複数の要素を重ねて複雑な合成を作成する方法。", "slug": "layers-guide", "content": "## レイヤーの使い方\n\nレイヤー機能を使うことで、複数の動画や画像を重ねて、複雑な合成を作成できます。", "difficulty": "中級", "readingTime": 4, "views": 480, "createdAt": "2024-01-25"},
+    {"id": "basic-012", "categoryId": "basic", "title": "マスク機能：特定の領域を強調する", "description": "CapCutのマスク機能を使って、動画の特定の領域を強調・隠す方法。", "slug": "mask-feature-guide", "content": "## マスク機能\n\nマスク機能を使うことで、動画の特定の領域に効果を適用できます。", "difficulty": "中級", "readingTime": 4, "views": 420, "createdAt": "2024-01-26"},
+    {"id": "basic-013", "categoryId": "basic", "title": "色調補正：ホワイトバランスと露出の調整", "description": "CapCutで色調補正を行い、ホワイトバランスと露出を調整する方法。", "slug": "color-correction-basics", "content": "## 色調補正\n\n色調補正を行うことで、動画の色合いと明るさを調整できます。", "difficulty": "中級", "readingTime": 4, "views": 550, "createdAt": "2024-01-27"},
+    {"id": "basic-014", "categoryId": "basic", "title": "エクスポート設定：最適な品質で動画を保存", "description": "CapCutのエクスポート設定を調整して、最適な品質で動画を保存する方法。", "slug": "export-settings-guide", "content": "## エクスポート設定\n\nエクスポート設定を調整することで、動画の品質とファイルサイズを最適化できます。", "difficulty": "初級", "readingTime": 4, "views": 890, "createdAt": "2024-01-28"},
+    {"id": "basic-015", "categoryId": "basic", "title": "ショートカットキー：効率的な編集作業", "description": "CapCutのショートカットキーを使って、編集作業を効率化する方法。", "slug": "keyboard-shortcuts", "content": "## ショートカットキー\n\nショートカットキーを使うことで、編集作業を大幅に効率化できます。", "difficulty": "初級", "readingTime": 3, "views": 720, "createdAt": "2024-01-29"},
+    
+    {"id": "youtube-001", "categoryId": "youtube", "title": "YouTubeの推奨動画フォーマット：最適な解像度とアスペクト比", "description": "YouTubeで高く評価されるための最適な動画フォーマットと設定を学びます。", "slug": "youtube-format-guide", "content": "## YouTubeの推奨フォーマット\n\nYouTubeで最高のパフォーマンスを得るための設定方法。", "difficulty": "初級", "readingTime": 5, "views": 2100, "createdAt": "2024-02-01"},
+    {"id": "youtube-002", "categoryId": "youtube", "title": "サムネイル作成テクニック：クリック率を上げる", "description": "YouTubeで視聴者の目を引くサムネイルを作成するテクニック。", "slug": "youtube-thumbnail-tips", "content": "## サムネイル作成のコツ\n\nクリック率を上げるサムネイル作成方法。", "difficulty": "初級", "readingTime": 6, "views": 1850, "createdAt": "2024-02-02"},
+    {"id": "youtube-003", "categoryId": "youtube", "title": "イントロ・アウトロの作成：プロっぽい動画にする", "description": "CapCutでプロフェッショナルなイントロ・アウトロを作成する方法。", "slug": "youtube-intro-outro", "content": "## イントロ・アウトロ作成\n\nプロフェッショナルな動画の作り方。", "difficulty": "初級", "readingTime": 7, "views": 1620, "createdAt": "2024-02-03"},
+    {"id": "youtube-004", "categoryId": "youtube", "title": "テンポとリズム：音楽に合わせた編集", "description": "BGMのテンポに合わせて動画をリズミカルに編集する方法。", "slug": "youtube-tempo-editing", "content": "## テンポに合わせた編集\n\nリズミカルな動画編集のコツ。", "difficulty": "中級", "readingTime": 6, "views": 1340, "createdAt": "2024-02-04"},
+    {"id": "youtube-005", "categoryId": "youtube", "title": "字幕とテロップ：視聴者の理解を深める", "description": "効果的な字幕とテロップを使って、視聴者の理解を深める方法。", "slug": "youtube-subtitles", "content": "## 字幕とテロップの活用\n\n視聴者の理解を深める字幕の使い方。", "difficulty": "初級", "readingTime": 5, "views": 1510, "createdAt": "2024-02-05"},
+    {"id": "youtube-006", "categoryId": "youtube", "title": "カット編集とペーシング：視聴者を飽きさせない", "description": "効果的なカット編集で、視聴者を飽きさせない動画を作成する方法。", "slug": "youtube-pacing", "content": "## ペーシングの工夫\n\n視聴者を飽きさせない編集方法。", "difficulty": "中級", "readingTime": 5, "views": 1280, "createdAt": "2024-02-06"},
+    {"id": "youtube-007", "categoryId": "youtube", "title": "効果音とSE：動画に躍動感を加える", "description": "効果音とSEを使って、動画に躍動感を加える方法。", "slug": "youtube-sound-effects", "content": "## 効果音の活用\n\n躍動感のある動画作成。", "difficulty": "初級", "readingTime": 4, "views": 980, "createdAt": "2024-02-07"},
+    {"id": "youtube-008", "categoryId": "youtube", "title": "ナレーション録音：クリアな音声を記録", "description": "CapCutでナレーション音声をクリアに録音・編集する方法。", "slug": "youtube-narration", "content": "## ナレーション録音\n\nクリアなナレーション音声の録音方法。", "difficulty": "初級", "readingTime": 5, "views": 1120, "createdAt": "2024-02-08"},
+    {"id": "youtube-009", "categoryId": "youtube", "title": "トランジション効果：シーン切り替えを工夫", "description": "YouTubeで人気のトランジション効果を使いこなす方法。", "slug": "youtube-transitions", "content": "## トランジション効果\n\nYouTubeで人気のトランジション。", "difficulty": "初級", "readingTime": 4, "views": 1450, "createdAt": "2024-02-09"},
+    {"id": "youtube-010", "categoryId": "youtube", "title": "テキストアニメーション：動的なテキスト効果", "description": "CapCutでテキストに動的なアニメーション効果を付ける方法。", "slug": "youtube-text-animation", "content": "## テキストアニメーション\n\n動的なテキスト効果の作成。", "difficulty": "中級", "readingTime": 5, "views": 890, "createdAt": "2024-02-10"},
+    {"id": "youtube-011", "categoryId": "youtube", "title": "カラーグレーディング：映像の雰囲気を統一", "description": "カラーグレーディングで動画全体の雰囲気を統一する方法。", "slug": "youtube-color-grading", "content": "## カラーグレーディング\n\n映像の雰囲気を統一する方法。", "difficulty": "中級", "readingTime": 6, "views": 750, "createdAt": "2024-02-11"},
+    {"id": "youtube-012", "categoryId": "youtube", "title": "スローモーション・高速再生：ドラマティック効果", "description": "スローモーションと高速再生を組み合わせてドラマティック効果を作る方法。", "slug": "youtube-speed-effects", "content": "## スピード効果\n\nドラマティック効果の作成。", "difficulty": "初級", "readingTime": 4, "views": 1100, "createdAt": "2024-02-12"},
+    {"id": "youtube-013", "categoryId": "youtube", "title": "スクリーンレコーディング：ゲーム実況やチュートリアル", "description": "CapCutでスクリーンレコーディングを活用したコンテンツを作成する方法。", "slug": "youtube-screen-recording", "content": "## スクリーンレコーディング\n\nゲーム実況やチュートリアル作成。", "difficulty": "初級", "readingTime": 5, "views": 1300, "createdAt": "2024-02-13"},
+    {"id": "youtube-014", "categoryId": "youtube", "title": "マルチカメラ編集：複数視点の動画", "description": "複数の視点を組み合わせた動画編集の方法。", "slug": "youtube-multi-camera", "content": "## マルチカメラ編集\n\n複数視点の動画作成。", "difficulty": "中級", "readingTime": 6, "views": 620, "createdAt": "2024-02-14"},
+    {"id": "youtube-015", "categoryId": "youtube", "title": "ライブ配信の編集：配信後の動画化", "description": "ライブ配信の録画をYouTube用に編集する方法。", "slug": "youtube-live-editing", "content": "## ライブ配信の編集\n\nライブ配信の動画化。", "difficulty": "中級", "readingTime": 5, "views": 540, "createdAt": "2024-02-15"},
+    
+    {"id": "troubleshoot-001", "categoryId": "troubleshoot", "title": "動画が重い・遅い：パフォーマンス最適化", "description": "CapCutで動画編集が遅い場合の対策と最適化方法。", "slug": "troubleshoot-performance", "content": "## パフォーマンス最適化\n\n動画編集が遅い場合の対策。", "difficulty": "初級", "readingTime": 5, "views": 2300, "createdAt": "2024-02-16"},
+    {"id": "troubleshoot-002", "categoryId": "troubleshoot", "title": "音声がズレる：オーディオ同期の問題", "description": "CapCutで音声と映像がズレる問題の解決方法。", "slug": "troubleshoot-audio-sync", "content": "## オーディオ同期\n\n音声と映像のズレを修正。", "difficulty": "初級", "readingTime": 4, "views": 1890, "createdAt": "2024-02-17"},
+    {"id": "troubleshoot-003", "categoryId": "troubleshoot", "title": "クラッシュ・強制終了：アプリが落ちる", "description": "CapCutがクラッシュする場合の原因と対策。", "slug": "troubleshoot-crash", "content": "## クラッシュ対策\n\nアプリが落ちる場合の解決方法。", "difficulty": "初級", "readingTime": 4, "views": 1650, "createdAt": "2024-02-18"},
+    {"id": "troubleshoot-004", "categoryId": "troubleshoot", "title": "エクスポート失敗：動画が保存されない", "description": "CapCutでエクスポートに失敗する場合の対処法。", "slug": "troubleshoot-export-fail", "content": "## エクスポート失敗\n\n動画が保存されない場合の対策。", "difficulty": "初級", "readingTime": 4, "views": 1420, "createdAt": "2024-02-19"},
+    {"id": "troubleshoot-005", "categoryId": "troubleshoot", "title": "フォーマットエラー：対応していないファイル形式", "description": "CapCutで対応していないファイル形式を扱う方法。", "slug": "troubleshoot-format-error", "content": "## フォーマットエラー\n\n対応していないファイル形式の対策。", "difficulty": "初級", "readingTime": 4, "views": 1100, "createdAt": "2024-02-20"},
+    {"id": "troubleshoot-006", "categoryId": "troubleshoot", "title": "字幕がズレる：タイミングの調整", "description": "CapCutで字幕のタイミングがズレる場合の修正方法。", "slug": "troubleshoot-subtitle-timing", "content": "## 字幕タイミング\n\n字幕のズレを修正。", "difficulty": "初級", "readingTime": 3, "views": 980, "createdAt": "2024-02-21"},
+    {"id": "troubleshoot-007", "categoryId": "troubleshoot", "title": "メモリ不足：ストレージ容量の問題", "description": "CapCutでメモリ不足エラーが出た場合の対処法。", "slug": "troubleshoot-memory", "content": "## メモリ不足\n\nストレージ容量の問題解決。", "difficulty": "初級", "readingTime": 3, "views": 850, "createdAt": "2024-02-22"},
+    {"id": "troubleshoot-008", "categoryId": "troubleshoot", "title": "画質が悪い：低解像度の問題", "description": "CapCutで画質が低下する原因と改善方法。", "slug": "troubleshoot-quality", "content": "## 画質改善\n\n低解像度の問題解決。", "difficulty": "初級", "readingTime": 4, "views": 1200, "createdAt": "2024-02-23"},
+    {"id": "troubleshoot-009", "categoryId": "troubleshoot", "title": "フレームレート設定：フレームドロップの解決", "description": "フレームレート設定でフレームドロップを解決する方法。", "slug": "troubleshoot-framerate", "content": "## フレームレート\n\nフレームドロップの解決。", "difficulty": "中級", "readingTime": 4, "views": 720, "createdAt": "2024-02-24"},
+    {"id": "troubleshoot-010", "categoryId": "troubleshoot", "title": "エフェクトが反映されない：設定の確認", "description": "CapCutでエフェクトが反映されない場合の確認方法。", "slug": "troubleshoot-effects", "content": "## エフェクト反映\n\nエフェクトが反映されない場合の対策。", "difficulty": "初級", "readingTime": 3, "views": 650, "createdAt": "2024-02-25"},
+    {"id": "troubleshoot-011", "categoryId": "troubleshoot", "title": "カラーが崩れる：色空間の問題", "description": "CapCutで色が崩れる場合の色空間設定。", "slug": "troubleshoot-color-space", "content": "## 色空間設定\n\n色が崩れる場合の対策。", "difficulty": "中級", "readingTime": 4, "views": 580, "createdAt": "2024-02-26"},
+    {"id": "troubleshoot-012", "categoryId": "troubleshoot", "title": "BGMが入らない：音声トラックの問題", "description": "CapCutでBGMが入らない場合の対処法。", "slug": "troubleshoot-audio-track", "content": "## 音声トラック\n\nBGMが入らない場合の解決。", "difficulty": "初級", "readingTime": 3, "views": 740, "createdAt": "2024-02-27"},
+    {"id": "troubleshoot-013", "categoryId": "troubleshoot", "title": "テキストが表示されない：フォント問題", "description": "CapCutでテキストが表示されない場合のフォント設定。", "slug": "troubleshoot-font", "content": "## フォント問題\n\nテキストが表示されない場合の対策。", "difficulty": "初級", "readingTime": 3, "views": 620, "createdAt": "2024-02-28"},
+    {"id": "troubleshoot-014", "categoryId": "troubleshoot", "title": "トランジションが遅い：アニメーション最適化", "description": "トランジションが遅い場合の最適化方法。", "slug": "troubleshoot-transition-lag", "content": "## トランジション最適化\n\nトランジションが遅い場合の対策。", "difficulty": "中級", "readingTime": 4, "views": 510, "createdAt": "2024-02-29"},
+    {"id": "troubleshoot-015", "categoryId": "troubleshoot", "title": "プロジェクトが開かない：ファイル破損", "description": "CapCutのプロジェクトが開かない場合の復旧方法。", "slug": "troubleshoot-project-corrupt", "content": "## ファイル破損\n\nプロジェクトが開かない場合の復旧。", "difficulty": "中級", "readingTime": 4, "views": 450, "createdAt": "2024-03-01"},
+    
+    {"id": "advanced-001", "categoryId": "advanced", "title": "プロフェッショナルなカラーグレーディング", "description": "映画のようなカラーグレーディングテクニックを学びます。", "slug": "advanced-color-grading", "content": "## プロフェッショナルなカラーグレーディング\n\n映画のようなカラーグレーディング。", "difficulty": "上級", "readingTime": 8, "views": 1200, "createdAt": "2024-03-02"},
+    {"id": "advanced-002", "categoryId": "advanced", "title": "モーショングラフィックス：テキストアニメーション", "description": "複雑なモーショングラフィックスを作成する方法。", "slug": "advanced-motion-graphics", "content": "## モーショングラフィックス\n\n複雑なテキストアニメーション。", "difficulty": "上級", "readingTime": 9, "views": 980, "createdAt": "2024-03-03"},
+    {"id": "advanced-003", "categoryId": "advanced", "title": "グリーンスクリーン合成：背景置き換え", "description": "グリーンスクリーンを使った高度な合成技法。", "slug": "advanced-green-screen", "content": "## グリーンスクリーン合成\n\n背景置き換えの高度な技法。", "difficulty": "上級", "readingTime": 7, "views": 850, "createdAt": "2024-03-04"},
+    {"id": "advanced-004", "categoryId": "advanced", "title": "3Dエフェクト：立体的な動画表現", "description": "CapCutで3Dエフェクトを使った立体的な表現。", "slug": "advanced-3d-effects", "content": "## 3Dエフェクト\n\n立体的な動画表現。", "difficulty": "上級", "readingTime": 8, "views": 720, "createdAt": "2024-03-05"},
+    {"id": "advanced-005", "categoryId": "advanced", "title": "オプティカルフロー：スムーズなスローモーション", "description": "オプティカルフロー技術を使ったスムーズなスローモーション。", "slug": "advanced-optical-flow", "content": "## オプティカルフロー\n\nスムーズなスローモーション。", "difficulty": "上級", "readingTime": 7, "views": 640, "createdAt": "2024-03-06"},
+    {"id": "advanced-006", "categoryId": "advanced", "title": "マスキングとキーイング：高度な合成", "description": "複雑なマスキングとキーイング技術。", "slug": "advanced-masking-keying", "content": "## マスキングとキーイング\n\n高度な合成技術。", "difficulty": "上級", "readingTime": 8, "views": 580, "createdAt": "2024-03-07"},
+    {"id": "advanced-007", "categoryId": "advanced", "title": "オーディオマスタリング：プロフェッショナルな音声", "description": "プロフェッショナルなオーディオマスタリング技法。", "slug": "advanced-audio-mastering", "content": "## オーディオマスタリング\n\nプロフェッショナルな音声処理。", "difficulty": "上級", "readingTime": 7, "views": 520, "createdAt": "2024-03-08"},
+    {"id": "advanced-008", "categoryId": "advanced", "title": "フレームバイフレーム編集：精密な制御", "description": "フレームバイフレーム編集で精密な制御を実現。", "slug": "advanced-frame-by-frame", "content": "## フレームバイフレーム編集\n\n精密な制御。", "difficulty": "上級", "readingTime": 6, "views": 450, "createdAt": "2024-03-09"},
+    {"id": "advanced-009", "categoryId": "advanced", "title": "ルックアップテーブル（LUT）：映画風フィルター", "description": "LUTを使った映画風フィルター処理。", "slug": "advanced-lut", "content": "## LUT処理\n\n映画風フィルター。", "difficulty": "上級", "readingTime": 7, "views": 390, "createdAt": "2024-03-10"},
+    {"id": "advanced-010", "categoryId": "advanced", "title": "ダイナミクス処理：音声圧縮とEQ", "description": "ダイナミクス処理で音声を最適化。", "slug": "advanced-dynamics", "content": "## ダイナミクス処理\n\n音声最適化。", "difficulty": "上級", "readingTime": 6, "views": 320, "createdAt": "2024-03-11"},
+    {"id": "advanced-011", "categoryId": "advanced", "title": "ステレオイメージング：空間的な音声処理", "description": "ステレオイメージング技術で空間的な音声表現。", "slug": "advanced-stereo-imaging", "content": "## ステレオイメージング\n\n空間的な音声処理。", "difficulty": "上級", "readingTime": 6, "views": 280, "createdAt": "2024-03-12"},
+    {"id": "advanced-012", "categoryId": "advanced", "title": "ネストシーケンス：複雑なプロジェクト構成", "description": "ネストシーケンスで複雑なプロジェクト構成。", "slug": "advanced-nesting", "content": "## ネストシーケンス\n\n複雑なプロジェクト構成。", "difficulty": "上級", "readingTime": 7, "views": 240, "createdAt": "2024-03-13"},
+    {"id": "advanced-013", "categoryId": "advanced", "title": "プロキシワークフロー：高速編集", "description": "プロキシを使った高速編集ワークフロー。", "slug": "advanced-proxy-workflow", "content": "## プロキシワークフロー\n\n高速編集。", "difficulty": "上級", "readingTime": 6, "views": 210, "createdAt": "2024-03-14"},
+    {"id": "advanced-014", "categoryId": "advanced", "title": "バッチ処理：複数動画の一括編集", "description": "バッチ処理で複数の動画を一括編集。", "slug": "advanced-batch-processing", "content": "## バッチ処理\n\n一括編集。", "difficulty": "上級", "readingTime": 7, "views": 180, "createdAt": "2024-03-15"},
+    {"id": "advanced-015", "categoryId": "advanced", "title": "カスタムプリセット：編集効率化", "description": "カスタムプリセットで編集効率を大幅向上。", "slug": "advanced-custom-presets", "content": "## カスタムプリセット\n\n編集効率化。", "difficulty": "上級", "readingTime": 5, "views": 150, "createdAt": "2024-03-16"}
+  ],
+  "roadmap": {
+    "id": "beginner-roadmap",
+    "title": "初心者向け学習ロードマップ",
+    "description": "CapCutを初めて使う方向けの、段階的な学習プログラムです。このロードマップに従うことで、基本的な動画編集スキルを習得できます。",
+    "steps": [
+      {
+        "id": "step-1",
+        "title": "CapCutの基本を理解する",
+        "description": "CapCutの基本的な操作と、プロジェクト作成の流れを学びます。",
+        "articles": ["basic-001", "basic-002"],
+        "estimatedTime": "30分",
+        "difficulty": "初級"
+      },
+      {
+        "id": "step-2",
+        "title": "テキストと音声を追加する",
+        "description": "動画にテキストとBGMを追加して、より完成度の高い動画を作成します。",
+        "articles": ["basic-003", "basic-005"],
+        "estimatedTime": "45分",
+        "difficulty": "初級"
+      },
+      {
+        "id": "step-3",
+        "title": "トランジションとエフェクトを活用する",
+        "description": "トランジションとフィルター・エフェクトを使って、動画をより魅力的にします。",
+        "articles": ["basic-004", "basic-006"],
+        "estimatedTime": "45分",
+        "difficulty": "初級"
+      },
+      {
+        "id": "step-4",
+        "title": "動画の速度とフレーミングを調整する",
+        "description": "速度調整やクロップ・ズーム機能を使って、より良い構図を実現します。",
+        "articles": ["basic-007", "basic-008"],
+        "estimatedTime": "40分",
+        "difficulty": "初級"
+      },
+      {
+        "id": "step-5",
+        "title": "色調補正と高度な編集技法を学ぶ",
+        "description": "色調補正やキーフレームアニメーションなど、より高度な編集技法を習得します。",
+        "articles": ["basic-013", "basic-010"],
+        "estimatedTime": "60分",
+        "difficulty": "中級"
+      },
+      {
+        "id": "step-6",
+        "title": "動画をエクスポートして完成させる",
+        "description": "エクスポート設定を調整して、最適な品質で動画を保存します。",
+        "articles": ["basic-014"],
+        "estimatedTime": "20分",
+        "difficulty": "初級"
+      }
+    ]
+  }
+}
