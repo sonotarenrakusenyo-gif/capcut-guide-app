@@ -134,6 +134,17 @@ export default function ArticleDetail() {
           <p className="text-lg text-muted-foreground mb-8">
             {article?.description}
           </p>
+
+          {/* 解説画像 */}
+          {(article as any)?.image && (
+            <div className="mb-8">
+              <img
+                src={(article as any).image}
+                alt={article?.title}
+                className="w-full max-w-2xl mx-auto rounded-2xl border border-border/40 shadow-lg block"
+              />
+            </div>
+          )}
         </div>
 
         {/* 記事コンテンツ */}

@@ -40,7 +40,8 @@
       "difficulty": "上級",
       "readingTime": 8,
       "views": 1200,
-      "createdAt": "2024-03-02"
+      "createdAt": "2024-03-02",
+      "image": "/images/img-20.png"
     },
     {
       "id": "advanced-002",
@@ -88,7 +89,8 @@
       "difficulty": "上級",
       "readingTime": 8,
       "views": 640,
-      "createdAt": "2024-03-06"
+      "createdAt": "2024-03-06",
+      "image": "/images/img-18.png"
     },
     {
       "id": "advanced-006",
@@ -184,7 +186,8 @@
       "difficulty": "上級",
       "readingTime": 8,
       "views": 210,
-      "createdAt": "2024-03-14"
+      "createdAt": "2024-03-14",
+      "image": "/images/img-19.png"
     },
     {
       "id": "advanced-014",
@@ -220,7 +223,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1250,
-      "createdAt": "2024-01-15"
+      "createdAt": "2024-01-15",
+      "image": "/images/img-01.png"
     },
     {
       "id": "basic-002",
@@ -232,7 +236,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 890,
-      "createdAt": "2024-01-16"
+      "createdAt": "2024-01-16",
+      "image": "/images/img-02.png"
     },
     {
       "id": "basic-003",
@@ -244,7 +249,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1100,
-      "createdAt": "2024-01-17"
+      "createdAt": "2024-01-17",
+      "image": "/images/img-03.png"
     },
     {
       "id": "basic-004",
@@ -256,7 +262,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 950,
-      "createdAt": "2024-01-18"
+      "createdAt": "2024-01-18",
+      "image": "/images/img-04.png"
     },
     {
       "id": "basic-005",
@@ -268,7 +275,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 820,
-      "createdAt": "2024-01-19"
+      "createdAt": "2024-01-19",
+      "image": "/images/img-05.png"
     },
     {
       "id": "basic-006",
@@ -280,7 +288,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1050,
-      "createdAt": "2024-01-20"
+      "createdAt": "2024-01-20",
+      "image": "/images/img-06.png"
     },
     {
       "id": "basic-007",
@@ -328,7 +337,8 @@
       "difficulty": "中級",
       "readingTime": 7,
       "views": 540,
-      "createdAt": "2024-01-24"
+      "createdAt": "2024-01-24",
+      "image": "/images/img-15.png"
     },
     {
       "id": "basic-011",
@@ -340,7 +350,8 @@
       "difficulty": "中級",
       "readingTime": 7,
       "views": 480,
-      "createdAt": "2024-01-25"
+      "createdAt": "2024-01-25",
+      "image": "/images/img-16.png"
     },
     {
       "id": "basic-012",
@@ -352,7 +363,8 @@
       "difficulty": "中級",
       "readingTime": 7,
       "views": 420,
-      "createdAt": "2024-01-26"
+      "createdAt": "2024-01-26",
+      "image": "/images/img-17.png"
     },
     {
       "id": "basic-013",
@@ -400,7 +412,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 2300,
-      "createdAt": "2024-02-16"
+      "createdAt": "2024-02-16",
+      "image": "/images/img-12.png"
     },
     {
       "id": "troubleshoot-002",
@@ -412,7 +425,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1890,
-      "createdAt": "2024-02-17"
+      "createdAt": "2024-02-17",
+      "image": "/images/img-13.png"
     },
     {
       "id": "troubleshoot-003",
@@ -436,7 +450,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1420,
-      "createdAt": "2024-02-19"
+      "createdAt": "2024-02-19",
+      "image": "/images/img-14.png"
     },
     {
       "id": "troubleshoot-005",
@@ -616,7 +631,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 2100,
-      "createdAt": "2024-02-01"
+      "createdAt": "2024-02-01",
+      "image": "/images/img-07.png"
     },
     {
       "id": "youtube-002",
@@ -628,7 +644,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 1850,
-      "createdAt": "2024-02-02"
+      "createdAt": "2024-02-02",
+      "image": "/images/img-08.png"
     },
     {
       "id": "youtube-003",
@@ -796,7 +813,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 0,
-      "createdAt": "2024-03-20"
+      "createdAt": "2024-03-20",
+      "image": "/images/img-09.png"
     },
     {
       "id": "youtube-jumpcut",
@@ -808,7 +826,8 @@
       "difficulty": "初級",
       "readingTime": 7,
       "views": 0,
-      "createdAt": "2024-03-20"
+      "createdAt": "2024-03-20",
+      "image": "/images/img-10.png"
     },
     {
       "id": "youtube-retention",
@@ -820,7 +839,8 @@
       "difficulty": "中級",
       "readingTime": 7,
       "views": 0,
-      "createdAt": "2024-03-20"
+      "createdAt": "2024-03-20",
+      "image": "/images/img-11.png"
     }
   ],
   "roadmap": {
