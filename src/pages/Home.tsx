@@ -380,67 +380,10 @@ export default function Home() {
       </div>
 
       {/* フッター */}
-      <footer className="border-t border-border mt-0 py-8 bg-card/30">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h5 className="font-bold mb-4">カテゴリー</h5>
-              <nav className="space-y-2">
-                {categories.map((cat) => (
-                  <a
-                    key={cat.id}
-                    href={`/category/${cat.id}`}
-                    className="text-sm text-muted-foreground hover:text-accent transition-colors block"
-                  >
-                    {cat.name}
-                  </a>
-                ))}
-              </nav>
-            </div>
-            <div>
-              <h5 className="font-bold mb-4">機能</h5>
-              <nav className="space-y-2">
-                <a
-                  href="/favorites"
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors block"
-                >
-                  お気に入り
-                </a>
-                <a
-                  href="/roadmap"
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors block"
-                >
-                  学習ロードマップ
-                </a>
-                <a
-                  href="/mypage"
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors block"
-                >
-                  マイページ
-                </a>
-              </nav>
-            </div>
-            <div>
-              <h5 className="font-bold mb-4">リソース</h5>
-              <nav className="space-y-2">
-                <a
-                  href="/"
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors block"
-                >
-                  ホーム
-                </a>
-              </nav>
-            </div>
-            <div>
-              <h5 className="font-bold mb-4">その他</h5>
-              <p className="text-sm text-muted-foreground">
-                CapCut完全攻略アプリ
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2024 CapCut完全攻略. All rights reserved.</p>
-          </div>
+      <footer className="border-t border-border mt-0 py-6 bg-card/30">
+        <div className="container text-center text-sm text-muted-foreground space-y-1">
+          <p className="font-medium">CapCut完全攻略アプリ</p>
+          <p>© 2024 CapCut完全攻略. All rights reserved.</p>
         </div>
       </footer>
     </div>
