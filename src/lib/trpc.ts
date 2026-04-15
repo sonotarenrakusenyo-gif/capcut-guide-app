@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import articlesData from "@/data/articles-data.json";
+import { normalizeSearchText } from "@/lib/searchNormalize";
 
 type Article = (typeof articlesData.articles)[number];
 
@@ -78,10 +79,12 @@ export const trpc = {
       useQuery: ({ keyword }: { keyword: string }, opts?: { enabled?: boolean }) =>
         useSimpleQuery(
           () => {
-            const q = keyword.trim().toLowerCase();
-            if (!q) return [];
+            const q = normalizeSearchText(keyword);
+            if (!q || q.length < 1) return [];
             return (articlesData.articles as Article[]).filter((a) =>
-              `${a.title ?? ""} ${a.description ?? ""} ${a.content ?? ""}`.toLowerCase().includes(q)
+              normalizeSearchText(
+                `${a.title ?? ""} ${a.description ?? ""} ${a.content ?? ""}`
+              ).includes(q)
             );
           },
           opts?.enabled ?? true

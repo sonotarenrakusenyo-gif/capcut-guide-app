@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { useLocation, Link } from 'wouter';
@@ -6,19 +6,35 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from "@/components/ui/input";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 
+const CATEGORY_LABELS: Record<string, string> = {
+  basic: "基本操作",
+  youtube: "YouTube実践",
+  troubleshoot: "トラブル解決",
+  advanced: "高度な応用",
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  basic: "bg-blue-500/10 text-blue-400",
+  youtube: "bg-red-500/10 text-red-400",
+  troubleshoot: "bg-yellow-500/10 text-yellow-400",
+  advanced: "bg-purple-500/10 text-purple-400",
+};
+
 export default function SearchResults() {
   const [, setLocation] = useLocation();
   const [query, setQuery] = useState("");
   const [recentQueries, setRecentQueries] = useState<string[]>([]);
   const RECENT_KEY = "capcut_recent_searches";
 
-  const { data: searched = [] } = trpc.articles.search.useQuery(
+  // trpc.search 内で normalizeSearchText を使った正規化済みフィルタリングが完結しているため、
+  // ここでは二重フィルタリングは行わず、そのまま results を使う
+  const normalizedQuery = normalizeSearchText(query);
+  const { data: results = [] } = trpc.articles.search.useQuery(
     { keyword: query },
-    { enabled: normalizeSearchText(query).length >= 2 }
+    { enabled: normalizedQuery.length >= 1 }
   );
 
   useEffect(() => {
-    // URLからクエリパラメータを取得
     const params = new URLSearchParams(window.location.search);
     const q = params.get("q") || "";
     setQuery(q);
@@ -45,16 +61,6 @@ export default function SearchResults() {
     localStorage.setItem(RECENT_KEY, JSON.stringify(next));
   };
 
-  const filteredArticles = useMemo(() => {
-    const normalizedQuery = normalizeSearchText(query);
-    if (!normalizedQuery || normalizedQuery.length < 2) return [];
-    return (searched || []).filter((article) =>
-      normalizeSearchText(`${article.title ?? ""} ${article.description ?? ""} ${article.content ?? ""}`).includes(
-        normalizedQuery
-      )
-    );
-  }, [searched, query]);
-
   const handleQueryChange = (value: string) => {
     setQuery(value);
     saveRecentQuery(value);
@@ -67,6 +73,8 @@ export default function SearchResults() {
     window.history.replaceState({}, "", `/search${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
+  const showResults = normalizedQuery.length >= 1;
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container py-8">
@@ -77,10 +85,11 @@ export default function SearchResults() {
               type="text"
               value={query}
               onChange={(e) => handleQueryChange(e.target.value)}
-              placeholder="タイトル・本文からリアルタイム検索"
+              placeholder="タイトル・本文からリアルタイム検索（カタカナ・ひらがな両対応）"
+              autoFocus
             />
           </div>
-          {recentQueries.length > 0 && (
+          {recentQueries.length > 0 && !query && (
             <div className="flex flex-wrap gap-2 mb-3">
               {recentQueries.slice(0, 6).map((item) => (
                 <button
@@ -94,42 +103,59 @@ export default function SearchResults() {
               ))}
             </div>
           )}
-          <p className="text-lg text-muted-foreground">
-            「{query}」の検索結果：{filteredArticles.length}件
-          </p>
-          {normalizeSearchText(query).length > 0 && normalizeSearchText(query).length < 2 && (
-            <p className="text-sm text-muted-foreground mt-1">2文字以上入力すると絞り込み精度が上がります。</p>
+          {showResults && (
+            <p className="text-lg text-muted-foreground">
+              「{query}」の検索結果：<span className="font-semibold text-foreground">{results.length}件</span>
+              {results.length > 0 && (
+                <span className="text-sm ml-2">
+                  （全{["basic","youtube","troubleshoot","advanced"].map(c => {
+                    const n = results.filter(a => a.categoryId === c).length;
+                    return n > 0 ? `${CATEGORY_LABELS[c]}${n}件` : null;
+                  }).filter(Boolean).join(" / ")}）
+                </span>
+              )}
+            </p>
           )}
         </div>
 
-        {filteredArticles.length > 0 ? (
+        {showResults && results.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map(article => (
+            {results.map(article => (
               <Link key={article.id} href={`/article/${article.id}`}>
-              <Card
-                className="cursor-pointer hover:shadow-lg transition-shadow h-full"
-              >
-                <CardHeader>
-                  <CardTitle className="line-clamp-2">{article.title}</CardTitle>
-                  <CardDescription>{article.difficulty} • {article.readingTime}分</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground line-clamp-3">
-                    {article.description || '詳細を読む'}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card className="cursor-pointer hover:shadow-lg transition-shadow h-full">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CATEGORY_COLORS[article.categoryId] ?? "bg-accent/10 text-accent"}`}>
+                        {CATEGORY_LABELS[article.categoryId] ?? article.categoryId}
+                      </span>
+                    </div>
+                    <CardTitle className="line-clamp-2">{article.title}</CardTitle>
+                    <CardDescription>{article.difficulty} • {article.readingTime}分</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground line-clamp-3">
+                      {article.description || '詳細を読む'}
+                    </p>
+                  </CardContent>
+                </Card>
               </Link>
             ))}
           </div>
-        ) : (
+        ) : showResults ? (
           <div className="text-center py-12">
-            <p className="text-lg text-muted-foreground mb-4">
-              検索結果が見つかりません
+            <p className="text-lg text-muted-foreground mb-2">
+              「{query}」に一致する記事が見つかりません
+            </p>
+            <p className="text-sm text-muted-foreground mb-6">
+              別のキーワードや、カタカナ・ひらがな表記を変えてお試しください
             </p>
             <Button onClick={() => setLocation('/')}>
               ホームに戻る
             </Button>
+          </div>
+        ) : (
+          <div className="text-center py-12 text-muted-foreground">
+            キーワードを入力して検索してください
           </div>
         )}
       </div>
