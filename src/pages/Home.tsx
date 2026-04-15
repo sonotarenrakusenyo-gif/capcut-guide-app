@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Search, Zap, Play, AlertCircle, Sparkles, UserCircle2 } from "lucide-react";
+import { Search, Zap, Play, AlertCircle, Sparkles, UserCircle2, ArrowUp } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 
@@ -368,8 +368,19 @@ export default function Home() {
         </section>
       </main>
 
+      {/* ページトップに戻るボタン */}
+      <div className="flex justify-center py-10 border-t border-border/30">
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="w-full max-w-sm h-14 text-base font-semibold rounded-2xl gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-200 hover:text-white transition-all shadow-lg"
+        >
+          <ArrowUp className="w-5 h-5" />
+          ページの一番上に戻る
+        </Button>
+      </div>
+
       {/* フッター */}
-      <footer className="border-t border-border mt-16 py-8 bg-card/30">
+      <footer className="border-t border-border mt-0 py-8 bg-card/30">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
