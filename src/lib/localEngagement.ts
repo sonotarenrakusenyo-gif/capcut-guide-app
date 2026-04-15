@@ -1,5 +1,21 @@
 const LIKES_KEY = "capcut_likes";
 const BOOKMARKS_KEY = "capcut_bookmarks";
+const PROGRESS_KEY = "capcut_article_progress";
+
+export function getCompletedArticleIds(): string[] {
+  return readIds(PROGRESS_KEY);
+}
+
+export function toggleCompletedArticle(articleId: string): string[] {
+  const next = toggleInList(getCompletedArticleIds(), articleId);
+  writeIds(PROGRESS_KEY, next);
+  window.dispatchEvent(new CustomEvent("capcut_progress_changed"));
+  return next;
+}
+
+export function isArticleCompleted(articleId: string): boolean {
+  return getCompletedArticleIds().includes(articleId);
+}
 
 function readIds(key: string): string[] {
   try {

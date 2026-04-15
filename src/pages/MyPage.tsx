@@ -3,27 +3,41 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Heart, Bookmark, ArrowLeft } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Loader2, Heart, Bookmark, ArrowLeft, Map } from "lucide-react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import {
   getBookmarkedArticleIds,
   getLikedArticleIds,
   toggleBookmarkedArticle,
   toggleLikedArticle,
+  getCompletedArticleIds,
 } from "@/lib/localEngagement";
+
+const TOTAL_ARTICLES = 66;
 
 export default function MyPage() {
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("bookmarks");
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [likedIds, setLikedIds] = useState<string[]>([]);
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
 
   const { data: articles = [], isLoading: articlesLoading } = trpc.articles.getAll.useQuery();
+
+  const loadProgress = useCallback(() => {
+    setCompletedIds(getCompletedArticleIds());
+  }, []);
 
   useEffect(() => {
     setBookmarkedIds(getBookmarkedArticleIds());
     setLikedIds(getLikedArticleIds());
-  }, []);
+    loadProgress();
+    window.addEventListener("capcut_progress_changed", loadProgress);
+    return () => window.removeEventListener("capcut_progress_changed", loadProgress);
+  }, [loadProgress]);
+
+  const completedCount = completedIds.length;
+  const progressPct = Math.round((completedCount / TOTAL_ARTICLES) * 100);
 
   const bookmarkedArticles = useMemo(
     () => articles.filter((article) => bookmarkedIds.includes(article.id)),
@@ -58,6 +72,36 @@ export default function MyPage() {
             ブックマークと「いいね」を管理できます
           </p>
         </div>
+
+        {/* 学習進捗カード */}
+        <Card
+          className="mb-8 bg-slate-800 border-slate-700 cursor-pointer hover:border-blue-500 transition-colors"
+          onClick={() => setLocation("/roadmap")}
+        >
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Map className="w-5 h-5 text-blue-400" />
+                <CardTitle className="text-white text-lg">学習進捗</CardTitle>
+              </div>
+              <span className="text-sm font-mono text-blue-400 font-semibold">
+                {completedCount} / {TOTAL_ARTICLES} 完了
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden mb-2">
+              <div
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 h-full transition-all duration-500"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>{progressPct}% 達成</span>
+              <span className="text-blue-400 hover:underline">ロードマップを開く →</span>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* タブ */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

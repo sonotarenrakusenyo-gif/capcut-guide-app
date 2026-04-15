@@ -1,64 +1,60 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, Circle } from "lucide-react";
-import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { useState, useEffect } from "react";
+import { ArrowLeft, CheckCircle, Circle, Lightbulb } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 import articlesData from "@/data/articles-data.json";
-import { toast } from "sonner";
+import {
+  getCompletedArticleIds,
+  toggleCompletedArticle,
+} from "@/lib/localEngagement";
+
+const TOTAL = 66;
+
+type Article = (typeof articlesData.articles)[number] & { image?: string };
+
+const CATEGORIES = [
+  { id: "basic",       label: "基本操作",     count: 15, color: "from-blue-500 to-cyan-500",     border: "border-blue-500/40" },
+  { id: "youtube",     label: "YouTube実践",  count: 18, color: "from-red-500 to-pink-500",      border: "border-red-500/40" },
+  { id: "troubleshoot",label: "トラブル解決", count: 18, color: "from-yellow-500 to-orange-500", border: "border-yellow-500/40" },
+  { id: "advanced",    label: "高度な応用",   count: 15, color: "from-purple-500 to-pink-500",   border: "border-purple-500/40" },
+];
+
+// カテゴリー内の記事を並び替え
+// advanced のみ：画像なし記事を先に、画像付き記事を最後に
+// それ以外：画像付き記事を先に
+function sortArticles(articles: Article[], categoryId: string): Article[] {
+  const withImg    = articles.filter((a) => (a as any).image);
+  const withoutImg = articles.filter((a) => !(a as any).image);
+  if (categoryId === "advanced") return [...withoutImg, ...withImg];
+  return [...withImg, ...withoutImg];
+}
 
 export default function Roadmap() {
   const [, setLocation] = useLocation();
-  const { user, isAuthenticated } = useAuth();
-  const [progress, setProgress] = useState<Record<string, boolean>>({});
-  const utils = trpc.useUtils();
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
 
-  const { data: userProgress = [] } = trpc.progress.getProgress.useQuery(
-    undefined,
-    { enabled: isAuthenticated }
-  );
-
-  const updateProgressMutation = trpc.progress.updateProgress.useMutation({
-    onSuccess: () => {
-      utils.progress.getProgress.invalidate();
-      toast.success("進捗を保存しました");
-    },
-    onError: () => {
-      toast.error("進捗保存に失敗しました");
-    },
-  });
+  const loadProgress = useCallback(() => {
+    setCompletedIds(getCompletedArticleIds());
+  }, []);
 
   useEffect(() => {
-    const progressMap: Record<string, boolean> = {};
-    userProgress.forEach((p) => {
-      progressMap[p.roadmapStepId] = p.completed === 1;
-    });
-    setProgress(progressMap);
-  }, [userProgress]);
+    loadProgress();
+    window.addEventListener("capcut_progress_changed", loadProgress);
+    return () => window.removeEventListener("capcut_progress_changed", loadProgress);
+  }, [loadProgress]);
 
-  const roadmap = articlesData.roadmap;
-  const completedSteps = Object.values(progress).filter(Boolean).length;
-  const totalSteps = roadmap.steps.length;
-  const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
+  const completedCount = completedIds.length;
+  const progressPct = Math.round((completedCount / TOTAL) * 100);
 
-  const handleToggleStep = (stepId: string) => {
-    if (!isAuthenticated) {
-      toast.info("ログインして進捗を追跡してください");
-      setLocation("/login");
-      return;
-    }
-
-    const currentStatus = progress[stepId] || false;
-    updateProgressMutation.mutate({
-      roadmapStepId: stepId,
-      completed: !currentStatus,
-    });
+  const handleToggle = (articleId: string) => {
+    const next = toggleCompletedArticle(articleId);
+    setCompletedIds(next);
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* ナビゲーションヘッダー */}
+      {/* ヘッダー */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
@@ -68,163 +64,170 @@ export default function Roadmap() {
             <h1 className="text-xl font-bold">CapCut完全攻略</h1>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <a href="/favorites" className="hover:text-accent transition-colors">
-              お気に入り
-            </a>
-            <a href="/roadmap" className="hover:text-accent transition-colors font-semibold">
-              学習ロードマップ
-            </a>
+            <a href="/favorites" className="hover:text-accent transition-colors">お気に入り</a>
+            <a href="/roadmap" className="hover:text-accent transition-colors font-semibold">学習ロードマップ</a>
           </nav>
         </div>
       </header>
 
       <main className="container py-12">
         {/* 戻るボタン */}
-        <Button
-          variant="ghost"
-          onClick={() => setLocation("/")}
-          className="mb-8"
-        >
+        <Button variant="ghost" onClick={() => setLocation("/")} className="mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" />
           戻る
         </Button>
 
         {/* ページタイトル */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">初心者向け学習ロードマップ</h1>
-          <p className="text-lg text-muted-foreground mb-8">
-            {roadmap.description}
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold mb-3">学習ロードマップ</h1>
+          <p className="text-lg text-muted-foreground mb-6">
+            全66記事を順番に攻略して、CapCutをマスターしよう。
+            <span className="inline-flex items-center gap-1 ml-2 text-yellow-400 text-sm font-semibold">
+              <Lightbulb className="w-4 h-4" />解説画像あり
+            </span>
+            は特に重要なメインステップです。
           </p>
 
           {/* 進捗バー */}
-          <div className="bg-card/50 rounded-lg p-6 backdrop-blur">
+          <Card className="p-6 border-0 bg-card/50 backdrop-blur">
             <div className="flex items-center justify-between mb-3">
               <span className="font-semibold">学習進捗</span>
-              <span className="text-sm text-muted-foreground">
-                {completedSteps} / {totalSteps}
+              <span className="text-sm text-muted-foreground font-mono">
+                {completedCount} / {TOTAL} 完了
               </span>
             </div>
             <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 h-full transition-all duration-300"
-                style={{ width: `${progressPercentage}%` }}
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 h-full transition-all duration-500"
+                style={{ width: `${progressPct}%` }}
               />
             </div>
-            <div className="mt-3 text-sm text-muted-foreground">
-              {progressPercentage}% 完了
-            </div>
-          </div>
+            <div className="mt-2 text-sm text-muted-foreground">{progressPct}% 完了</div>
+          </Card>
         </div>
 
-        {/* ロードマップステップ */}
-        <div className="space-y-6">
-          {roadmap.steps.map((step, index) => {
-            const isCompleted = progress[step.id] || false;
-            const stepArticles = step.articles.map((articleId) =>
-              articlesData.articles.find((a) => a.id === articleId)
+        {/* カテゴリー別記事リスト */}
+        <div className="space-y-10">
+          {CATEGORIES.map((cat) => {
+            const catArticles = sortArticles(
+              (articlesData.articles as Article[]).filter((a) => a.categoryId === cat.id),
+              cat.id
             );
+            const catCompleted = catArticles.filter((a) => completedIds.includes(a.id)).length;
 
             return (
-              <Card
-                key={step.id}
-                className={`overflow-hidden border-0 backdrop-blur transition-all duration-300 cursor-pointer ${
-                  isCompleted
-                    ? "bg-accent/10 border-l-4 border-accent"
-                    : "bg-card/50 hover:bg-card/80"
-                }`}
-                onClick={() => handleToggleStep(step.id)}
-              >
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    {/* チェックボックス */}
-                    <div className="flex-shrink-0 pt-1">
-                      {isCompleted ? (
-                        <CheckCircle className="w-6 h-6 text-accent" />
-                      ) : (
-                        <Circle className="w-6 h-6 text-muted-foreground" />
-                      )}
-                    </div>
-
-                    {/* コンテンツ */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-bold">
-                          ステップ {index + 1}: {step.title}
-                        </h3>
-                        <span className="text-xs font-semibold text-accent bg-accent/10 px-2 py-1 rounded-full">
-                          {step.difficulty}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground mb-4">
-                        {step.description}
-                      </p>
-
-                      {/* 関連記事 */}
-                      <div className="mb-4">
-                        <p className="text-sm font-semibold mb-2">
-                          関連記事 ({step.articles.length}件)
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {stepArticles.map((article) =>
-                            article ? (
-                              <button
-                                key={article.id}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setLocation(`/article/${article.id}`);
-                                }}
-                                className="text-xs bg-accent/10 hover:bg-accent/20 text-accent px-3 py-1 rounded-full transition-colors"
-                              >
-                                {article.title}
-                              </button>
-                            ) : null
-                          )}
-                        </div>
-                      </div>
-
-                      {/* 推定時間 */}
-                      <div className="text-xs text-muted-foreground">
-                        ⏱ 推定学習時間: {step.estimatedTime}
-                      </div>
-                    </div>
-
-                    {/* 完了ボタン */}
-                    <div className="flex-shrink-0">
-                      <Button
-                        variant={isCompleted ? "default" : "outline"}
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleStep(step.id);
-                        }}
-                        disabled={updateProgressMutation.isPending}
-                        className="whitespace-nowrap"
-                      >
-                        {isCompleted ? "✓ 完了" : "完了にする"}
-                      </Button>
+              <section key={cat.id}>
+                {/* カテゴリーヘッダー */}
+                <div className={`flex items-center gap-3 mb-4 pb-3 border-b ${cat.border}`}>
+                  <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${cat.color}`} />
+                  <h2 className="text-xl font-bold">{cat.label}</h2>
+                  <span className="text-sm text-muted-foreground ml-1">
+                    {catCompleted} / {cat.count} 完了
+                  </span>
+                  <div className="flex-1 ml-2">
+                    <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className={`bg-gradient-to-r ${cat.color} h-full transition-all duration-500`}
+                        style={{ width: `${Math.round((catCompleted / cat.count) * 100)}%` }}
+                      />
                     </div>
                   </div>
                 </div>
-              </Card>
+
+                {/* 記事リスト */}
+                <div className="space-y-2">
+                  {catArticles.map((article, idx) => {
+                    const hasImage = !!(article as any).image;
+                    const isDone = completedIds.includes(article.id);
+
+                    return (
+                      <div
+                        key={article.id}
+                        className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 ${
+                          isDone
+                            ? "bg-accent/10 border border-accent/30"
+                            : hasImage
+                            ? "bg-card/70 border border-yellow-500/20 hover:border-yellow-500/40"
+                            : "bg-card/40 border border-border/30 hover:bg-card/60"
+                        }`}
+                      >
+                        {/* 完了アイコン */}
+                        <button
+                          onClick={() => handleToggle(article.id)}
+                          className="flex-shrink-0 focus:outline-none"
+                          aria-label={isDone ? "未完了に戻す" : "完了にする"}
+                        >
+                          {isDone ? (
+                            <CheckCircle className="w-5 h-5 text-accent" />
+                          ) : (
+                            <Circle className="w-5 h-5 text-muted-foreground" />
+                          )}
+                        </button>
+
+                        {/* 記事タイトル */}
+                        <button
+                          className="flex-1 text-left min-w-0"
+                          onClick={() => setLocation(`/article/${article.id}`)}
+                        >
+                          <span className={`text-sm font-medium line-clamp-1 ${isDone ? "line-through text-muted-foreground" : ""}`}>
+                            {article.title}
+                          </span>
+                        </button>
+
+                        {/* 解説画像バッジ */}
+                        {hasImage && (
+                          <span className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-yellow-400 bg-yellow-400/10 border border-yellow-400/30 px-2 py-0.5 rounded-full whitespace-nowrap">
+                            <Lightbulb className="w-3 h-3" />
+                            解説画像あり
+                          </span>
+                        )}
+
+                        {/* 完了トグルボタン */}
+                        <Button
+                          size="sm"
+                          variant={isDone ? "default" : "outline"}
+                          onClick={() => handleToggle(article.id)}
+                          className={`flex-shrink-0 text-xs whitespace-nowrap h-7 px-3 ${
+                            isDone
+                              ? "bg-accent/80 hover:bg-accent/60"
+                              : "border-border/50 hover:border-accent/50"
+                          }`}
+                        >
+                          {isDone ? "✓ 完了済み" : "完了にする"}
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
             );
           })}
         </div>
 
-        {/* 完了メッセージ */}
-        {completedSteps === totalSteps && (
+        {/* 全完了メッセージ */}
+        {completedCount === TOTAL && (
           <Card className="mt-12 p-8 text-center border-0 bg-gradient-to-r from-blue-500/10 to-pink-500/10 backdrop-blur">
-            <h2 className="text-3xl font-bold mb-4">
-              🎉 ロードマップ完了おめでとうございます！
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              あなたはCapCutの基本をマスターしました。
-              次は、より高度なテクニックに挑戦してみましょう！
+            <h2 className="text-3xl font-bold mb-4">🎉 全66記事 完全制覇！</h2>
+            <p className="text-lg text-muted-foreground mb-6">
+              CapCutを完全にマスターしました。おめでとうございます！
             </p>
-            <Button onClick={() => setLocation("/category/advanced")} size="lg">
-              高度な応用を学ぶ
+            <Button onClick={() => setLocation("/")} size="lg">
+              ホームに戻る
             </Button>
           </Card>
         )}
+
+        {/* 下部ホームに戻るボタン */}
+        <div className="mt-12 flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/")}
+            className="text-muted-foreground hover:text-foreground gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            ホームに戻る
+          </Button>
+        </div>
       </main>
     </div>
   );
