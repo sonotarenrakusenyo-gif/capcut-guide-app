@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Heart, Bookmark } from "lucide-react";
+import { Loader2, Heart, Bookmark, ArrowLeft } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   getBookmarkedArticleIds,
@@ -37,6 +37,18 @@ export default function MyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
+        {/* 戻るボタン */}
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/")}
+            className="text-slate-400 hover:text-white hover:bg-slate-700 rounded-full px-4 py-2 h-auto text-sm gap-1.5 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            ホームに戻る
+          </Button>
+        </div>
+
         {/* ヘッダー */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">

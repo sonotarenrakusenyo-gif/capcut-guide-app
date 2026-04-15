@@ -84,14 +84,14 @@ export default function ArticleDetail() {
       </header>
 
       <main className="container py-12">
-        {/* 戻るボタン */}
+        {/* 上部：カテゴリー一覧に戻るボタン */}
         <Button
           variant="ghost"
-          onClick={() => setLocation("/")}
-          className="mb-8"
+          onClick={() => setLocation(article?.categoryId ? `/category/${article.categoryId}` : "/")}
+          className="mb-8 text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          戻る
+          記事一覧に戻る
         </Button>
 
         {/* 記事ヘッダー */}
@@ -178,6 +178,27 @@ export default function ArticleDetail() {
             </div>
           </div>
         )}
+
+        {/* 記事最下部：記事一覧に戻るボタン */}
+        <div className="max-w-3xl mx-auto mt-12 pb-4">
+          <div className="border-t border-border/40 pt-10 flex flex-col items-center gap-4">
+            <p className="text-sm text-muted-foreground">この記事を読み終えました</p>
+            <Button
+              onClick={() => setLocation(article?.categoryId ? `/category/${article.categoryId}` : "/")}
+              className="w-full max-w-sm h-14 text-base font-semibold rounded-2xl gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-200 hover:text-white transition-all shadow-lg"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              記事一覧に戻る
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/")}
+              className="text-muted-foreground hover:text-foreground text-sm h-10 rounded-xl px-6"
+            >
+              ホームに戻る
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   );

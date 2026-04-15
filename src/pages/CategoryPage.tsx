@@ -184,6 +184,17 @@ export default function CategoryPage() {
             </div>
           )}
         </div>
+
+        {/* 一覧最下部：ホームへ戻るボタン */}
+        <div className="mt-16 flex justify-center">
+          <Button
+            onClick={() => setLocation("/")}
+            className="w-full max-w-sm h-14 text-base font-semibold rounded-2xl gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-200 hover:text-white transition-all shadow-lg"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            カテゴリー選択（ホーム）に戻る
+          </Button>
+        </div>
       </main>
     </div>
   );
