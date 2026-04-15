@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import articlesData from "@/data/articles-data.json";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 
-type Article = (typeof articlesData.articles)[number];
+type Article = (typeof articlesData.articles)[number] & { image?: string };
 
 function useSimpleQuery<T>(getter: () => T, enabled = true) {
   return { data: enabled ? getter() : undefined, isLoading: false };

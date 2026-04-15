@@ -136,10 +136,10 @@ export default function ArticleDetail() {
           </p>
 
           {/* 解説画像 */}
-          {(article as any)?.image && (
+          {article?.image && (
             <div className="mb-8">
               <img
-                src={(article as any).image}
+                src={article.image}
                 alt={article?.title}
                 className="w-full max-w-2xl mx-auto rounded-2xl border border-border/40 shadow-lg block"
               />
