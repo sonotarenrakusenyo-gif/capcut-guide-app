@@ -59,7 +59,7 @@ export default function ArticleDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ナビゲーションヘッダー */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-16">
@@ -83,7 +83,7 @@ export default function ArticleDetail() {
         </div>
       </header>
 
-      <main className="container py-12">
+      <main className="container py-12 overflow-x-hidden">
         {/* 上部：カテゴリー一覧に戻るボタン */}
         <Button
           variant="ghost"
@@ -137,11 +137,12 @@ export default function ArticleDetail() {
 
           {/* 解説画像 */}
           {article?.image && (
-            <div className="mb-8">
+            <div className="mb-8 w-full overflow-hidden">
               <img
                 src={article.image}
                 alt={article?.title}
-                className="w-full max-w-2xl mx-auto rounded-2xl border border-border/40 shadow-lg block"
+                style={{ maxWidth: "100%", width: "100%", height: "auto", display: "block" }}
+                className="rounded-2xl border border-border/40 shadow-lg"
               />
             </div>
           )}
@@ -150,7 +151,7 @@ export default function ArticleDetail() {
         {/* 記事コンテンツ */}
         <div className="max-w-3xl mx-auto">
           <Card className="p-8 border-0 bg-card/50 backdrop-blur">
-            <div className="prose prose-invert max-w-none prose-img:rounded-xl prose-img:border prose-img:border-border/40 prose-img:shadow-sm [&_img]:max-w-full [&_img]:h-auto">
+            <div className="prose prose-invert max-w-none prose-img:rounded-xl prose-img:border prose-img:border-border/40 prose-img:shadow-sm [&_img]:max-w-full [&_img]:w-full [&_img]:h-auto [&_img]:block">
               <Streamdown>{article?.content || ''}</Streamdown>
             </div>
           </Card>
