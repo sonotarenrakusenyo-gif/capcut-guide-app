@@ -18,6 +18,18 @@ export default function ArticleDetail() {
   const articleId = location.split("/")[2];
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop || document.body.scrollTop;
+      const total = el.scrollHeight - el.clientHeight;
+      setScrollPct(total > 0 ? Math.min(100, Math.round((scrolled / total) * 100)) : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const { data: article } = trpc.articles.getById.useQuery(
     { id: articleId },
@@ -60,6 +72,14 @@ export default function ArticleDetail() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* スクロール進捗バー */}
+      <div className="fixed top-0 left-0 w-full z-[60] h-1 bg-transparent pointer-events-none">
+        <div
+          className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-100"
+          style={{ width: `${scrollPct}%` }}
+        />
+      </div>
+
       {/* ナビゲーションヘッダー */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-16">

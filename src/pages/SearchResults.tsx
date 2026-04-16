@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { useLocation, Link } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from "@/components/ui/input";
+import { Lightbulb } from "lucide-react";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -72,6 +73,16 @@ export default function SearchResults() {
     }
     window.history.replaceState({}, "", `/search${params.toString() ? `?${params.toString()}` : ""}`);
   };
+
+  const { data: allArticles = [] } = trpc.articles.getAll.useQuery();
+
+  // ゼロ件時サジェスト：カテゴリーごとに2記事ずつ最大8記事
+  const suggestedArticles = useMemo(() => {
+    const cats = ["basic", "youtube", "troubleshoot", "advanced"];
+    return cats.flatMap((cat) =>
+      allArticles.filter((a) => a.categoryId === cat).slice(0, 2)
+    );
+  }, [allArticles]);
 
   const showResults = normalizedQuery.length >= 1;
 
@@ -142,16 +153,48 @@ export default function SearchResults() {
             ))}
           </div>
         ) : showResults ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-muted-foreground mb-2">
-              「{query}」に一致する記事が見つかりません
-            </p>
-            <p className="text-sm text-muted-foreground mb-6">
-              別のキーワードや、カタカナ・ひらがな表記を変えてお試しください
-            </p>
-            <Button onClick={() => setLocation('/')}>
-              ホームに戻る
-            </Button>
+          <div className="py-8">
+            {/* ゼロ件メッセージ */}
+            <div className="text-center mb-10">
+              <p className="text-lg text-muted-foreground mb-1">
+                「{query}」に一致する記事が見つかりません
+              </p>
+              <p className="text-sm text-muted-foreground">
+                別のキーワードや、カタカナ・ひらがな表記を変えてお試しください
+              </p>
+            </div>
+
+            {/* サジェスト */}
+            {suggestedArticles.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Lightbulb className="w-5 h-5 text-yellow-400" />
+                  <h2 className="text-base font-semibold">こちらの記事はいかがですか？</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                  {suggestedArticles.map((article) => (
+                    <Link key={article.id} href={`/article/${article.id}`}>
+                      <Card className="cursor-pointer hover:shadow-lg transition-shadow h-full border-border/50 hover:border-accent/40">
+                        <CardHeader className="pb-2">
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full w-fit ${CATEGORY_COLORS[article.categoryId] ?? "bg-accent/10 text-accent"}`}>
+                            {CATEGORY_LABELS[article.categoryId] ?? article.categoryId}
+                          </span>
+                          <CardTitle className="text-sm line-clamp-2 mt-1">{article.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <p className="text-xs text-muted-foreground line-clamp-2">{article.description}</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+                <div className="text-center">
+                  <Button variant="outline" onClick={() => setLocation('/')}>
+                    ホームに戻る
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="text-center py-12 text-muted-foreground">
