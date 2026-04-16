@@ -181,7 +181,10 @@ export default function ArticleDetail() {
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {relatedArticle.description}
                       </p>
-                      <Button variant="ghost" size="sm" className="text-xs">
+                      <Button
+                        size="sm"
+                        className="text-xs font-semibold rounded-full px-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white border-0 shadow-sm"
+                      >
                         読む →
                       </Button>
                     </div>

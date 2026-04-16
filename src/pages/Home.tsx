@@ -392,10 +392,9 @@ export default function Home() {
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>👁 {(article.views ?? 0).toLocaleString()}</span>
                     <Button
-                      variant="ghost"
                       size="sm"
-                      className="text-xs"
                       onClick={() => setLocation(`/article/${article.id}`)}
+                      className="text-xs font-semibold rounded-full px-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white border-0 shadow-sm"
                     >
                       読む →
                     </Button>
