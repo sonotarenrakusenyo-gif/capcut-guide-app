@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, Circle, Lightbulb, ArrowUp } from "lucide-react";
+import { ArrowLeft, CheckCircle, Circle, Lightbulb, ArrowUp, Trophy } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import articlesData from "@/data/articles-data.json";
 import {
@@ -33,6 +33,7 @@ function sortArticles(articles: Article[], categoryId: string): Article[] {
 export default function Roadmap() {
   const [, setLocation] = useLocation();
   const [completedIds, setCompletedIds] = useState<string[]>([]);
+  const [celebrationDismissed, setCelebrationDismissed] = useState(false);
 
   const loadProgress = useCallback(() => {
     setCompletedIds(getCompletedArticleIds());
@@ -52,8 +53,70 @@ export default function Roadmap() {
     setCompletedIds(next);
   };
 
+  const allDone = completedCount === TOTAL && !celebrationDismissed;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+
+      {/* ===== 全記事完了 祝福オーバーレイ ===== */}
+      {allDone && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          {/* 紙吹雪（CSS アニメーション） */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {Array.from({ length: 30 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-3 opacity-80 rounded-sm"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `-${10 + Math.random() * 10}%`,
+                  background: ["#3b82f6","#ec4899","#f59e0b","#10b981","#8b5cf6","#06b6d4"][i % 6],
+                  animation: `fall ${2 + Math.random() * 3}s ${Math.random() * 2}s linear infinite`,
+                  transform: `rotate(${Math.random() * 360}deg)`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* カード */}
+          <Card className="relative z-10 mx-4 max-w-sm w-full p-8 text-center border-0 bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl">
+            <div className="flex justify-center mb-4">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 flex items-center justify-center shadow-lg">
+                <Trophy className="w-10 h-10 text-white" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+              完全制覇！
+            </h2>
+            <p className="text-lg font-semibold text-white mb-1">🎉 おめでとうございます！</p>
+            <p className="text-sm text-slate-400 mb-6">
+              全 <span className="text-white font-bold">66記事</span> を読破しました。<br />
+              あなたはCapCutマスターです！
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => setLocation("/")}
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold border-0 shadow"
+              >
+                ホームに戻る
+              </Button>
+              <button
+                onClick={() => setCelebrationDismissed(true)}
+                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+              >
+                閉じる
+              </button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fall {
+          0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+      `}</style>
       {/* ヘッダー */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-16">
@@ -204,18 +267,6 @@ export default function Roadmap() {
           })}
         </div>
 
-        {/* 全完了メッセージ */}
-        {completedCount === TOTAL && (
-          <Card className="mt-12 p-8 text-center border-0 bg-gradient-to-r from-blue-500/10 to-pink-500/10 backdrop-blur">
-            <h2 className="text-3xl font-bold mb-4">🎉 全66記事 完全制覇！</h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              CapCutを完全にマスターしました。おめでとうございます！
-            </p>
-            <Button onClick={() => setLocation("/")} size="lg">
-              ホームに戻る
-            </Button>
-          </Card>
-        )}
 
         {/* 下部ナビゲーション */}
         <div className="mt-12 flex flex-col items-center gap-3">

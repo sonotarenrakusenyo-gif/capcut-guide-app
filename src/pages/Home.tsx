@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Search, Zap, Play, AlertCircle, Sparkles, UserCircle2, ArrowUp } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { normalizeSearchText } from "@/lib/searchNormalize";
+import { getCompletedArticleIds } from "@/lib/localEngagement";
 
 const categories = [
   {
@@ -45,6 +46,28 @@ export default function Home() {
   const [, setLocation] = useLocation();
   const { data: articles = [] } = trpc.articles.getAll.useQuery();
   const RECENT_KEY = "capcut_recent_searches";
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
+
+  const loadProgress = useCallback(() => {
+    setCompletedIds(getCompletedArticleIds());
+  }, []);
+
+  useEffect(() => {
+    loadProgress();
+    window.addEventListener("capcut_progress_changed", loadProgress);
+    return () => window.removeEventListener("capcut_progress_changed", loadProgress);
+  }, [loadProgress]);
+
+  // カテゴリー別の完了数
+  const categoryCompletedCounts = useMemo(() => {
+    const map: Record<string, number> = {};
+    completedIds.forEach((id) => {
+      const article = (articles || []).find((a) => a.id === id);
+      if (article) map[article.categoryId] = (map[article.categoryId] || 0) + 1;
+    });
+    return map;
+  }, [completedIds, articles]);
+
   const categoryCounts = useMemo(() => {
     const map: Record<string, number> = {};
     (articles || []).forEach((a) => {
@@ -342,13 +365,37 @@ export default function Home() {
                     <div className="flex items-center gap-2 mb-3">
                       <Icon className="w-5 h-5 text-accent" />
                       <h4 className="font-bold text-lg">{category.name}</h4>
-                      <span style={{ marginLeft: "auto", fontSize: 12, opacity: 0.85 }}>
-                        {categoryCounts[category.id] ?? 0}記事
-                      </span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-sm text-muted-foreground mb-3">
                       {category.description}
                     </p>
+                    {/* 完了率バッジ＋ミニ進捗バー */}
+                    {(() => {
+                      const total = categoryCounts[category.id] ?? 0;
+                      const done  = categoryCompletedCounts[category.id] ?? 0;
+                      const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+                      const barColor =
+                        category.id === "basic"       ? "from-blue-500 to-cyan-500"
+                        : category.id === "youtube"   ? "from-red-500 to-pink-500"
+                        : category.id === "troubleshoot" ? "from-yellow-500 to-orange-500"
+                        : "from-purple-500 to-pink-500";
+                      return (
+                        <div className="mb-4">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-xs text-muted-foreground">{total}記事</span>
+                            <span className={`text-xs font-semibold ${done > 0 ? "text-accent" : "text-muted-foreground"}`}>
+                              {done} / {total} 完了
+                            </span>
+                          </div>
+                          <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className={`bg-gradient-to-r ${barColor} h-full transition-all duration-500`}
+                              style={{ width: `${pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
                     <Button
                       variant="outline"
                       size="sm"
