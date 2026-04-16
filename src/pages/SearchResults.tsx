@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useLocation, Link } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from "@/components/ui/input";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, ArrowLeft } from "lucide-react";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -87,10 +87,23 @@ export default function SearchResults() {
   const showResults = normalizedQuery.length >= 1;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ background: "var(--color-bg, #0b1220)", color: "var(--color-fg, #e5e7eb)" }}>
       <div className="container py-8">
+
+        {/* ===== 上部：戻るボタン ===== */}
+        <div className="mb-4">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/")}
+            style={{ color: "var(--color-muted, #94a3b8)", display: "inline-flex", alignItems: "center", gap: 6 }}
+          >
+            <ArrowLeft size={16} />
+            ホームに戻る
+          </Button>
+        </div>
+
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">検索結果</h1>
+          <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--color-fg, #e5e7eb)" }}>検索結果</h1>
           <div className="max-w-xl mb-4">
             <Input
               type="text"
@@ -115,8 +128,8 @@ export default function SearchResults() {
             </div>
           )}
           {showResults && (
-            <p className="text-lg text-muted-foreground">
-              「{query}」の検索結果：<span className="font-semibold text-foreground">{results.length}件</span>
+            <p className="text-lg" style={{ color: "var(--color-muted, #94a3b8)" }}>
+              「{query}」の検索結果：<span className="font-semibold" style={{ color: "var(--color-fg, #e5e7eb)" }}>{results.length}件</span>
               {results.length > 0 && (
                 <span className="text-sm ml-2">
                   （全{["basic","youtube","troubleshoot","advanced"].map(c => {
@@ -197,10 +210,29 @@ export default function SearchResults() {
             )}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">
+          <div className="text-center py-12" style={{ color: "var(--color-muted, #94a3b8)" }}>
             キーワードを入力して検索してください
           </div>
         )}
+
+        {/* ===== 下部：戻るボタン ===== */}
+        <div className="mt-12 pt-6 flex justify-center" style={{ borderTop: "1px solid var(--color-border, #334155)" }}>
+          <Button
+            variant="outline"
+            onClick={() => setLocation("/")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              color: "var(--color-fg, #e5e7eb)",
+              borderColor: "var(--color-border, #334155)",
+            }}
+          >
+            <ArrowLeft size={16} />
+            ホームに戻る
+          </Button>
+        </div>
+
       </div>
     </div>
   );
