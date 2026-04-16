@@ -191,34 +191,37 @@ export default function ArticleDetail() {
           </div>
         )}
 
-        {/* 記事最下部：ナビゲーションボタン群 */}
-        <div className="max-w-3xl mx-auto mt-12 pb-4">
-          <div className="border-t border-border/40 pt-10 flex flex-col items-center gap-3">
+        {/* 記事最下部：ナビゲーション */}
+        <div className="max-w-3xl mx-auto mt-12 pb-8">
+          <div className="border-t border-border/40 pt-8 flex flex-col items-center gap-4">
             <p className="text-sm text-muted-foreground">この記事を読み終えました</p>
-            {/* 学習ロードマップに戻る（最優先） */}
-            <Button
-              onClick={() => setLocation("/roadmap")}
-              className="w-full max-w-sm h-14 text-base font-semibold rounded-2xl gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white transition-all shadow-lg"
-            >
-              <Map className="w-5 h-5" />
-              学習ロードマップに戻る
-            </Button>
-            {/* 記事一覧に戻る */}
-            <Button
-              onClick={() => setLocation(article?.categoryId ? `/category/${article.categoryId}` : "/")}
-              className="w-full max-w-sm h-12 text-sm font-semibold rounded-2xl gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-200 hover:text-white transition-all shadow"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              記事一覧に戻る
-            </Button>
-            {/* ホームに戻る */}
-            <Button
-              variant="ghost"
+
+            {/* 横並びの2ボタン */}
+            <div className="flex gap-3 w-full max-w-sm">
+              <Button
+                onClick={() => setLocation(article?.categoryId ? `/category/${article.categoryId}` : "/")}
+                variant="outline"
+                className="flex-1 h-12 text-sm font-semibold rounded-2xl gap-1.5 border-slate-600 text-slate-300 hover:text-white hover:border-slate-400 hover:bg-slate-800"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                記事一覧
+              </Button>
+              <Button
+                onClick={() => setLocation("/roadmap")}
+                className="flex-1 h-12 text-sm font-semibold rounded-2xl gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white border-0 shadow-md"
+              >
+                <Map className="w-4 h-4" />
+                ロードマップ
+              </Button>
+            </div>
+
+            {/* ホームはテキストリンク */}
+            <button
               onClick={() => setLocation("/")}
-              className="text-muted-foreground hover:text-foreground text-sm h-10 rounded-xl px-6"
+              className="text-xs text-muted-foreground hover:text-foreground underline-offset-2 hover:underline transition-colors"
             >
               ホームに戻る
-            </Button>
+            </button>
           </div>
         </div>
       </main>
