@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, Circle, Lightbulb } from "lucide-react";
+import { ArrowLeft, CheckCircle, Circle, Lightbulb, ArrowUp } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import articlesData from "@/data/articles-data.json";
 import {
@@ -217,12 +217,19 @@ export default function Roadmap() {
           </Card>
         )}
 
-        {/* 下部ホームに戻るボタン */}
-        <div className="mt-12 flex justify-center">
+        {/* 下部ナビゲーション */}
+        <div className="mt-12 flex flex-col items-center gap-3">
+          <Button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="w-full max-w-sm h-14 text-base font-semibold rounded-2xl gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-200 hover:text-white transition-all shadow-lg"
+          >
+            <ArrowUp className="w-5 h-5" />
+            ロードマップの一番上に戻る
+          </Button>
           <Button
             variant="ghost"
             onClick={() => setLocation("/")}
-            className="text-muted-foreground hover:text-foreground gap-2"
+            className="text-muted-foreground hover:text-foreground text-sm gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             ホームに戻る
