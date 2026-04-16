@@ -128,17 +128,29 @@ export default function SearchResults() {
             </div>
           )}
           {showResults && (
-            <p className="text-lg" style={{ color: "var(--color-muted, #94a3b8)" }}>
-              「{query}」の検索結果：<span className="font-semibold" style={{ color: "var(--color-fg, #e5e7eb)" }}>{results.length}件</span>
-              {results.length > 0 && (
-                <span className="text-sm ml-2">
-                  （全{["basic","youtube","troubleshoot","advanced"].map(c => {
-                    const n = results.filter(a => a.categoryId === c).length;
-                    return n > 0 ? `${CATEGORY_LABELS[c]}${n}件` : null;
-                  }).filter(Boolean).join(" / ")}）
-                </span>
-              )}
-            </p>
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <p className="text-lg" style={{ color: "var(--color-muted, #94a3b8)" }}>
+                「{query}」の検索結果：<span className="font-semibold" style={{ color: "var(--color-fg, #e5e7eb)" }}>{results.length}件</span>
+                {results.length > 0 && (
+                  <span className="text-sm ml-2">
+                    （全{["basic","youtube","troubleshoot","advanced"].map(c => {
+                      const n = results.filter(a => a.categoryId === c).length;
+                      return n > 0 ? `${CATEGORY_LABELS[c]}${n}件` : null;
+                    }).filter(Boolean).join(" / ")}）
+                  </span>
+                )}
+              </p>
+              {/* 検索結果の横の戻るボタン */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setLocation("/")}
+                style={{ display: "inline-flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}
+              >
+                <ArrowLeft size={14} />
+                ホームに戻る
+              </Button>
+            </div>
           )}
         </div>
 
