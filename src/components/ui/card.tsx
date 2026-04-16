@@ -6,9 +6,10 @@ export function Card({ className = "", style, ...props }: React.HTMLAttributes<H
       {...props}
       className={className}
       style={{
-        background: "#0f172a",
-        border: "1px solid #334155",
+        background: "var(--color-card, #0f172a)",
+        border: "1px solid var(--color-border, #334155)",
         borderRadius: 12,
+        color: "var(--color-fg, #e5e7eb)",
         ...style,
       }}
     />

@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Heart, Bookmark, ArrowLeft, Map } from "lucide-react";
+import { Loader2, Heart, Bookmark, ArrowLeft, Map, Clock } from "lucide-react";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import {
   getBookmarkedArticleIds,
@@ -11,6 +11,7 @@ import {
   toggleBookmarkedArticle,
   toggleLikedArticle,
   getCompletedArticleIds,
+  getRecentArticleIds,
 } from "@/lib/localEngagement";
 
 const TOTAL_ARTICLES = 66;
@@ -20,6 +21,7 @@ export default function MyPage() {
   const [activeTab, setActiveTab] = useState("bookmarks");
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [likedIds, setLikedIds] = useState<string[]>([]);
+  const [recentIds, setRecentIds] = useState<string[]>([]);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
 
   const { data: articles = [], isLoading: articlesLoading } = trpc.articles.getAll.useQuery();
@@ -31,6 +33,7 @@ export default function MyPage() {
   useEffect(() => {
     setBookmarkedIds(getBookmarkedArticleIds());
     setLikedIds(getLikedArticleIds());
+    setRecentIds(getRecentArticleIds());
     loadProgress();
     window.addEventListener("capcut_progress_changed", loadProgress);
     return () => window.removeEventListener("capcut_progress_changed", loadProgress);
@@ -46,6 +49,12 @@ export default function MyPage() {
   const likedArticles = useMemo(
     () => articles.filter((article) => likedIds.includes(article.id)),
     [articles, likedIds]
+  );
+  const recentArticles = useMemo(
+    () => recentIds
+      .map((id) => articles.find((a) => a.id === id))
+      .filter(Boolean) as typeof articles,
+    [articles, recentIds]
   );
 
   return (
@@ -105,22 +114,70 @@ export default function MyPage() {
 
         {/* タブ */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-slate-800 border border-slate-700">
+          <TabsList className="grid w-full grid-cols-3 bg-slate-800 border border-slate-700">
+            <TabsTrigger
+              value="recent"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-slate-600 data-[state=active]:to-slate-500 text-white text-xs"
+            >
+              <Clock className="w-3 h-3 mr-1" />
+              最近 ({recentArticles.length})
+            </TabsTrigger>
             <TabsTrigger
               value="bookmarks"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 text-white text-xs"
             >
-              <Bookmark className="w-4 h-4 mr-2" />
-              ブックマーク ({bookmarkedArticles.length})
+              <Bookmark className="w-3 h-3 mr-1" />
+              保存 ({bookmarkedArticles.length})
             </TabsTrigger>
             <TabsTrigger
               value="likes"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-red-500 text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-red-500 text-white text-xs"
             >
-              <Heart className="w-4 h-4 mr-2" />
+              <Heart className="w-3 h-3 mr-1" />
               いいね ({likedArticles.length})
             </TabsTrigger>
           </TabsList>
+
+          {/* 最近読んだ記事タブ */}
+          <TabsContent value="recent" className="space-y-4 mt-6">
+            {recentArticles.length > 0 ? (
+              <div className="grid gap-4">
+                {recentArticles.map((article, i) => (
+                  <Card
+                    key={article.id}
+                    className="bg-slate-800 border-slate-700 hover:border-slate-500 transition-colors cursor-pointer group"
+                    onClick={() => setLocation(`/article/${article.id}`)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex justify-between items-start gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs text-slate-500">#{i + 1}</span>
+                            <span className="text-xs text-slate-400">{article.difficulty}</span>
+                          </div>
+                          <CardTitle className="text-white group-hover:text-slate-300 transition-colors text-sm line-clamp-2">
+                            {article.title}
+                          </CardTitle>
+                          <CardDescription className="text-slate-400 text-xs mt-1 line-clamp-1">
+                            {article.description}
+                          </CardDescription>
+                        </div>
+                        <Clock className="w-4 h-4 text-slate-600 flex-shrink-0 mt-1" />
+                      </div>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="py-12 text-center">
+                  <Clock className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400">まだ記事を読んでいません</p>
+                  <p className="text-slate-500 text-sm mt-1">記事を開くと自動的に記録されます</p>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
 
           {/* ブックマークタブ */}
           <TabsContent value="bookmarks" className="space-y-4 mt-6">

@@ -1,6 +1,17 @@
 const LIKES_KEY = "capcut_likes";
 const BOOKMARKS_KEY = "capcut_bookmarks";
 const PROGRESS_KEY = "capcut_article_progress";
+const RECENT_ARTICLES_KEY = "capcut_recent_articles";
+
+export function recordArticleRead(articleId: string): void {
+  const prev = readIds(RECENT_ARTICLES_KEY);
+  const next = [articleId, ...prev.filter((id) => id !== articleId)].slice(0, 10);
+  writeIds(RECENT_ARTICLES_KEY, next);
+}
+
+export function getRecentArticleIds(): string[] {
+  return readIds(RECENT_ARTICLES_KEY);
+}
 
 export function getCompletedArticleIds(): string[] {
   return readIds(PROGRESS_KEY);

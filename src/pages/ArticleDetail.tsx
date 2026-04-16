@@ -11,6 +11,7 @@ import {
   getLikedArticleIds,
   toggleBookmarkedArticle,
   toggleLikedArticle,
+  recordArticleRead,
 } from "@/lib/localEngagement";
 
 export default function ArticleDetail() {
@@ -44,6 +45,7 @@ export default function ArticleDetail() {
   useEffect(() => {
     setIsLiked(getLikedArticleIds().includes(articleId));
     setIsBookmarked(getBookmarkedArticleIds().includes(articleId));
+    if (articleId) recordArticleRead(articleId);
   }, [articleId]);
 
   const handleToggleLike = () => {

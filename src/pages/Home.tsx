@@ -3,10 +3,11 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Search, Zap, Play, AlertCircle, Sparkles, UserCircle2, ArrowUp } from "lucide-react";
+import { Search, Zap, Play, AlertCircle, Sparkles, UserCircle2, ArrowUp, Sun, Moon } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { normalizeSearchText } from "@/lib/searchNormalize";
 import { getCompletedArticleIds } from "@/lib/localEngagement";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const categories = [
   {
@@ -40,6 +41,7 @@ const categories = [
 ];
 
 export default function Home() {
+  const { theme, toggleTheme } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
   const [recentQueries, setRecentQueries] = useState<string[]>([]);
@@ -231,6 +233,27 @@ export default function Home() {
             >
               🗺 ロードマップ
             </a>
+            {/* ダーク/ライト切り替え */}
+            <button
+              onClick={toggleTheme}
+              title={theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 36,
+                height: 36,
+                borderRadius: 999,
+                border: "1px solid #475569",
+                background: "transparent",
+                cursor: "pointer",
+                color: "#94a3b8",
+                transition: "all 0.2s",
+                flexShrink: 0,
+              }}
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
           </nav>
         </div>
       </header>
