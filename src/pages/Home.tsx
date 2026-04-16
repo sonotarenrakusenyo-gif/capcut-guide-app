@@ -389,8 +389,7 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                     {article.description}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>👁 {(article.views ?? 0).toLocaleString()}</span>
+                  <div className="flex items-center justify-end text-xs text-muted-foreground">
                     <Button
                       size="sm"
                       onClick={() => setLocation(`/article/${article.id}`)}

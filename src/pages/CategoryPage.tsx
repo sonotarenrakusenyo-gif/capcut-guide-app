@@ -168,8 +168,7 @@ export default function CategoryPage() {
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                       {article.description}
                     </p>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>👁 {(article.views ?? 0).toLocaleString()}</span>
+                    <div className="flex items-center justify-end text-xs text-muted-foreground">
                       <Button
                         size="sm"
                         className="text-xs font-semibold rounded-full px-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white border-0 shadow-sm"

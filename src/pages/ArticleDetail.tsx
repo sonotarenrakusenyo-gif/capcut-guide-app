@@ -104,9 +104,6 @@ export default function ArticleDetail() {
               <span className="text-xs text-muted-foreground">
                 {article?.readingTime}分で読める
               </span>
-              <span className="text-xs text-muted-foreground">
-                👁 {(article?.views ?? 0).toLocaleString()}
-              </span>
             </div>
             <div className="flex items-center gap-2">
               <Button
