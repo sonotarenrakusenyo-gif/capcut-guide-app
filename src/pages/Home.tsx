@@ -146,28 +146,67 @@ export default function Home() {
             </div>
             <h1 className="text-xl font-bold">CapCut完全攻略</h1>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="flex items-center gap-2">
             <a
               href="/mypage"
-              className="hover:text-accent transition-colors"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: 6,
+                gap: 5,
                 background: "rgba(37,99,235,0.15)",
-                padding: "6px 10px",
+                padding: "6px 12px",
                 borderRadius: 999,
                 border: "1px solid #3b82f6",
+                fontSize: 13,
+                fontWeight: 600,
+                color: "#93c5fd",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "background 0.2s",
               }}
             >
-              <UserCircle2 size={16} />
+              <UserCircle2 size={14} />
               マイページ
             </a>
-            <a href="/favorites" className="hover:text-accent transition-colors">
-              お気に入り
+            <a
+              href="/favorites"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+                background: "rgba(236,72,153,0.12)",
+                padding: "6px 12px",
+                borderRadius: 999,
+                border: "1px solid #ec4899",
+                fontSize: 13,
+                fontWeight: 600,
+                color: "#f9a8d4",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "background 0.2s",
+              }}
+            >
+              ♡ お気に入り
             </a>
-            <a href="/roadmap" className="hover:text-accent transition-colors">
-              学習ロードマップ
+            <a
+              href="/roadmap"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+                background: "rgba(139,92,246,0.15)",
+                padding: "6px 12px",
+                borderRadius: 999,
+                border: "1px solid #8b5cf6",
+                fontSize: 13,
+                fontWeight: 600,
+                color: "#c4b5fd",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "background 0.2s",
+              }}
+            >
+              🗺 ロードマップ
             </a>
           </nav>
         </div>
